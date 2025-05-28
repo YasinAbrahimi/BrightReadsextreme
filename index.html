@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Extreme Challenge - Sentence Quiz</title>
+</head>
+<body style="text-align: center; font-family: Arial; background-color: #ffebee;">
+  <h1>Extreme Challenge - Listen and Click</h1>
+  <p>Listen to the sentence and click the correct one!</p>
+  <button onclick="startQuiz()" style="font-size:1rem; padding:0.5rem 1rem; border:none; background-color:#f06292; color:white; border-radius:8px; cursor:pointer;">Play Sentence</button>
+  <div id="sentences" style="margin-top: 20px;"></div>
+
+  <script>
+    const sentences = [
+      "The quick brown fox jumps over the lazy dog.",
+      "Waltz, bad nymph, for quick jigs vex.",
+      "How quickly daft jumping zebras vex.",
+      "Big fjords vex quick waltzing nymphs.",
+      "Sphinx of black quartz, judge my vow.",
+      "Quick zephyrs blow, vexing daft Jim.",
+      "Amazingly few discotheques provide jukeboxes.",
+      "Grumpy wizards make toxic brew for the evil Queen and Jack.",
+      "Jinxed wizards pluck ivy from the big quilt.",
+      "Five quacking zephyrs jolt my wax bed.",
+      "The five boxing wizards jump quickly.",
+      "Zany Jacques proved strong by fixing the broken quilt.",
+      "Vexed nymphs go for quick waltz job in big haze.",
+      "Blowzy night-frumps vex'd Jack Q.",
+      "Jumping wizards vex bold, quirky foxes and nightclubs.",
+      "Just keep examining every low bid quoted for zinc etchings.",
+      "Twelve ziggurats quickly jumped a flying box of hazy dwarves.",
+      "Crazy Frederick bought many very exquisite opal jewels."
+    ];
+
+    const container = document.getElementById("sentences");
+    let correctSentence = "";
+
+    function startQuiz() {
+      resetButtons();
+      correctSentence = sentences[Math.floor(Math.random() * sentences.length)];
+
+      const utter = new SpeechSynthesisUtterance(correctSentence);
+      window.speechSynthesis.speak(utter);
+    }
+
+    function resetButtons() {
+      container.innerHTML = "";
+      sentences.forEach(sentence => {
+        const btn = document.createElement('button');
+        btn.textContent = sentence;
+        btn.style = "font-size:1.2rem; margin:10px; padding:1rem; border-radius:10px; background-color:#f8bbd0; border:none; cursor:pointer;";
+        
+        btn.onclick = () => {
+          if (btn.textContent === correctSentence) {
+            btn.style.backgroundColor = "#c8e6c9"; // green
+          } else {
+            btn.style.backgroundColor = "#ffcdd2"; // red
+            // Highlight correct one
+            [...container.children].forEach(b => {
+              if (b.textContent === correctSentence) {
+                b.style.backgroundColor = "#c8e6c9"; // green
+              }
+            });
+          }
+        };
+
+        container.appendChild(btn);
+      });
+    }
+
+    // Initialize buttons on page load
+    resetButtons();
+  </script>
+</body>
+</html>
